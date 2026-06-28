@@ -3,6 +3,7 @@ package com.anico.dtcc.pass_swap.controller;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.anico.dtcc.pass_swap.dto.PassStatusResponse;
 import com.anico.dtcc.pass_swap.dto.UserRequest;
 import com.anico.dtcc.pass_swap.service.PasswordService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +24,7 @@ public class CheckExpiration {
 
     //method used to check how many days are left till password expires
     @PostMapping("/check-expiration")
-    public String checkExpiration(@RequestBody UserRequest userRequest) {
+    public PassStatusResponse checkExpiration(@RequestBody UserRequest userRequest) {
         return passwordService.checkExpiration(userRequest);
     }
     
