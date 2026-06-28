@@ -3,6 +3,7 @@ package com.anico.dtcc.pass_swap.service;
 import org.springframework.stereotype.Service;
 
 import com.anico.dtcc.pass_swap.client.DtccClient;
+import com.anico.dtcc.pass_swap.dto.UserRequest;
 
 @Service
 public class PasswordService {
@@ -13,8 +14,8 @@ public class PasswordService {
         this.dtccClient = dtccClient;
     }
 
-    public String checkExpiration(String user) {
-        return dtccClient.getPasswordExpiration(user);
+    public String checkExpiration(UserRequest userRequest) {
+        return dtccClient.getPasswordExpiration(userRequest);
     }
     
 }

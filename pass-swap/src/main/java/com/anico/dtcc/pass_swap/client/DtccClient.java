@@ -3,16 +3,18 @@ package com.anico.dtcc.pass_swap.client;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.anico.dtcc.pass_swap.dto.UserRequest;
+
 @Service
 public class DtccClient {
     
     private final RestTemplate restTemplate = new RestTemplate();
 
-    public String getPasswordExpiration(String user) {
+    public String getPasswordExpiration(UserRequest userRequest) {
 
         String url = "http://localhost:8081/password-expiration";
 
-        return restTemplate.postForObject(url, user, String.class);
+        return restTemplate.postForObject(url, userRequest, String.class);
         //^this means:
         // make a GET request
         //to that url
