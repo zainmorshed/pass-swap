@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.anico.dtcc.pass_swap.client.DtccClient;
 import com.anico.dtcc.pass_swap.dto.PassStatusResponse;
 import com.anico.dtcc.pass_swap.dto.UserRequest;
+import com.anico.dtcc.pass_swap.dto.newPassResponse;
 
 @Service
 public class PasswordService {
@@ -19,7 +20,7 @@ public class PasswordService {
     }
 
 
-    public PassStatusResponse checkExpiration(UserRequest userRequest) {
+    public newPassResponse checkExpiration(UserRequest userRequest) {
 
         //call DTCC
         PassStatusResponse response = dtccClient.getPasswordExpiration(userRequest);
@@ -29,17 +30,21 @@ public class PasswordService {
         LocalDate expirationDate = response.getExpirationDate();
 
         //response object - handle response from DTCC
-        PassStatusResponse result = new PassStatusResponse();
+        newPassResponse result = new newPassResponse();
+
+        String passStatus = response.getPasswordStatus();
 
         result.setUserName(response.getUserName());
-        result.setExpirationDate(expirationDate);
-        result.setPasswordStatus(response.getPasswordStatus());
 
         if (expirationDate.isEqual(LocalDate.now()) || expirationDate.isBefore(LocalDate.now().plusDays(2))) {
             String newPassword = rotatePassword();
             result.setPassword(newPassword);
+            result.setNewExpDate(LocalDate.now().plusMonths(1));
+            result.setPasswordStatus(passStatus + "Your new password is: " + newPassword);
         } else {
             result.setPassword("Current password still valid");
+            result.setNewExpDate(expirationDate);
+            result.setPasswordStatus(response.getPasswordStatus());
         }
 
         return result;
