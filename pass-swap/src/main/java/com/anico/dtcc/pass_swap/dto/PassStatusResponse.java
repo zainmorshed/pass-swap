@@ -6,13 +6,17 @@ public class PassStatusResponse {
     private String userName;
     private LocalDate expirationDate;
     private String passwordStatus;
+    private String password;
 
     
-    public PassStatusResponse(String userName, LocalDate expirationDate, String passwordStatus) {
+    public PassStatusResponse(String userName, LocalDate expirationDate, String passwordStatus, String password) {
         this.userName = userName;
         this.expirationDate = expirationDate;
         this.passwordStatus = passwordStatus;
+        this.password = password;
     }
+
+    public PassStatusResponse(){}
 
     public String getUserName() {
         return userName;
@@ -33,6 +37,14 @@ public class PassStatusResponse {
 
     public void setPasswordStatus(String passwordStatus) {
         this.passwordStatus = passwordStatus;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }
