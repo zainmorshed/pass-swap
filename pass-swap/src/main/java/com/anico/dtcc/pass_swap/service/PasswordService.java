@@ -6,8 +6,10 @@ import java.util.UUID;
 import org.springframework.stereotype.Service;
 
 import com.anico.dtcc.pass_swap.client.DtccClient;
+import com.anico.dtcc.pass_swap.dto.NewPassRequest;
 import com.anico.dtcc.pass_swap.dto.PassStatusResponse;
 import com.anico.dtcc.pass_swap.dto.UserRequest;
+import com.anico.dtcc.pass_swap.dto.NewPassRequest;
 import com.anico.dtcc.pass_swap.dto.newPassResponse;
 
 @Service
@@ -41,10 +43,19 @@ public class PasswordService {
             result.setPassword(newPassword);
             result.setNewExpDate(LocalDate.now().plusMonths(1));
             result.setPasswordStatus(passStatus + "Your new password is: " + newPassword);
+
+            NewPassRequest newPassRequest = new NewPassRequest();
+
+            newPassRequest.setUserName(result.getUserName());
+            newPassRequest.setNewPassword(result.getPassword());
+
+            dtccClient.updatePassword(newPassRequest); //in status include that new password has been reset
+
+
         } else {
             result.setPassword("Current password still valid");
             result.setNewExpDate(expirationDate);
-            result.setPasswordStatus(response.getPasswordStatus());
+            result.setPasswordStatus(response.getPasswordStatus()); 
         }
 
         return result;
