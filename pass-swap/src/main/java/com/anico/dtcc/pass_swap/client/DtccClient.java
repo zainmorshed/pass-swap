@@ -6,6 +6,7 @@ import org.springframework.web.client.RestTemplate;
 import com.anico.dtcc.pass_swap.dto.UserRequest;
 import com.anico.dtcc.pass_swap.dto.NewPassRequest;
 import com.anico.dtcc.pass_swap.dto.PassStatusResponse;
+import com.anico.dtcc.pass_swap.dto.UpdatePassRequest;
 
 @Service
 public class DtccClient {
@@ -31,5 +32,13 @@ public class DtccClient {
         String url = "http://localhost:8081/reset-password";
 
         return restTemplate.postForObject(url, newPassword, String.class);
+    }
+
+    //use for manually updating to a new password
+    public String setNewPassword(UpdatePassRequest updatedPassword) {
+
+        String url = "http://localhost:8081/change-password";
+
+        return restTemplate.postForObject(url, updatedPassword, String.class);
     }
 }

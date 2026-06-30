@@ -3,7 +3,9 @@ package com.anico.dtcc.pass_swap.controller;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.anico.dtcc.pass_swap.dto.NewPassRequest;
 import com.anico.dtcc.pass_swap.dto.PassStatusResponse;
+import com.anico.dtcc.pass_swap.dto.UpdatePassRequest;
 import com.anico.dtcc.pass_swap.dto.UserRequest;
 import com.anico.dtcc.pass_swap.dto.newPassResponse;
 import com.anico.dtcc.pass_swap.service.PasswordService;
@@ -27,6 +29,12 @@ public class CheckExpiration {
     @PostMapping("/check-expiration")
     public newPassResponse checkExpiration(@RequestBody UserRequest userRequest) {
         return passwordService.checkExpiration(userRequest);
+    }
+
+    //endpoint to update password
+    @PostMapping("/update-password")
+    public String updatePassword(@RequestBody UpdatePassRequest newPassRequest) {
+        return passwordService.updatePassword(newPassRequest);
     }
     
 }

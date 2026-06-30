@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.anico.dtcc.pass_swap.client.DtccClient;
 import com.anico.dtcc.pass_swap.dto.NewPassRequest;
 import com.anico.dtcc.pass_swap.dto.PassStatusResponse;
+import com.anico.dtcc.pass_swap.dto.UpdatePassRequest;
 import com.anico.dtcc.pass_swap.dto.UserRequest;
 import com.anico.dtcc.pass_swap.dto.NewPassRequest;
 import com.anico.dtcc.pass_swap.dto.newPassResponse;
@@ -22,6 +23,11 @@ public class PasswordService {
         this.dtccClient = dtccClient;
     }
 
+    public String updatePassword(UpdatePassRequest updatePassRequest) {
+        dtccClient.setNewPassword(updatePassRequest);
+        return "Password successfully updated";
+        //return success on conditional?
+    }
 
     public newPassResponse checkExpiration(UserRequest userRequest) {
 
