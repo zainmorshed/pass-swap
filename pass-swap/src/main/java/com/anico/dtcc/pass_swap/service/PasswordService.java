@@ -1,6 +1,7 @@
 package com.anico.dtcc.pass_swap.service;
 
 import java.time.LocalDate;
+import java.util.Base64;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
@@ -43,6 +44,7 @@ public class PasswordService {
             result.setPassword(newPassword);
             result.setNewExpDate(LocalDate.now().plusMonths(1));
             result.setPasswordStatus(passStatus + "Your new password is: " + newPassword);
+            result.setBase64Password(encodePassword(newPassword));
 
             NewPassRequest newPassRequest = new NewPassRequest();
 
@@ -60,6 +62,17 @@ public class PasswordService {
 
         return result;
         
+    }
+
+    public String encodePassword(String plainTextPassword) {
+        // String newPassword = rotatePassword();
+        if (plainTextPassword == null) {
+            return null;
+        }
+
+        return Base64.getEncoder().encodeToString(plainTextPassword.getBytes());
+        //convert the text string into bytes, encode it, and convert it back to a string
+
     }
 
     
